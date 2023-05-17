@@ -12,7 +12,7 @@
                         <div class="col-md-9">
                             <div class="input-group">
                                 <div class="form-outline">
-                                    <input type="search" id="search" name="search" class="form-control" />
+                                    <input type="search" id="search" name="search" class="form-control" placeholder="Name or Extension..."/>
                                 </div>
                                 <button type="submit" class="btn btn-primary">
                                     Search

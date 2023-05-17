@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/asteric/users', [AdminController::class, 'getAsterisUsers'])->name('getAsterisUsers');
 Route::get('/asteric/avg', [AdminController::class, 'getAverageCallTimeOfAgent'])->name('getAverageCallTimeOfAgent');
-Route::get('/asteric/abn', [AdminController::class, 'getAverageCallAbandonment'])->name('getAverageCallAbandonment');
+
+Route::get('/asteric/abn', [AdminController::class, 'getCallAbandonment'])->name('abandonment');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

@@ -8,23 +8,10 @@ use App\Models\AsterisCdrModel;
 use App\Models\AsterisUserModel;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 
 class AdminController extends Controller
 {
-    public function getAsterisUsers()
-    {
-        try {
-            $astericUsers = AsterisUserModel::select('extension', 'name')
-            ->get();
-            if ($astericUsers) {
-                return $astericUsers;
-            } else {
-                return response()->json(['success' => true, 'message' => 'Error occurred', 'error_message' => 'No HomeInternet found'], 201);
-            }
-        }catch (\Throwable $e) {
-            return response()->json(['success' => false, 'message' => 'Error occurred', 'error_message' => $e->getMessage()]);
-        }
-    }
 
     public function getAverageCallTimeOfAgent(Request $request)
     {
@@ -112,4 +99,47 @@ class AdminController extends Controller
             return response()->json(['success' => false, 'message' => 'Error occurred', 'error_message' => $e->getMessage()]);
         }
     }
+
+
+    public function getCallAbandonment(Request $request)
+    {
+        $selectedDate = $request->input('date');
+
+        $query = AsterisCdrModel::select(
+            DB::raw('DATE(calldate) as date'),
+            DB::raw('COUNT(*) as totalCalls'),
+            DB::raw('SUM(CASE WHEN disposition != "ANSWERED" THEN 1 ELSE 0 END) as abandonedCalls')
+        )
+            ->groupBy('date')
+            ->orderBy('date', 'desc');
+
+        if ($selectedDate) {
+            $query->whereDate('calldate', '=', $selectedDate);
+        }
+
+        $results = $query->get();
+
+        $totalCalls = $results->sum('totalCalls');
+        $totalAbandonedCalls = $results->sum('abandonedCalls');
+        $abandonedCallsPercentage = $totalCalls > 0 ? ($totalAbandonedCalls / $totalCalls) * 100 : 0;
+
+        $responseData = [
+            'results' => $results,
+            'totalCalls' => $totalCalls,
+            'totalAbandonedCalls' => $totalAbandonedCalls,
+            'abandonedCallsPercentage' => $abandonedCallsPercentage,
+            'selectedDate' => $selectedDate
+        ];
+
+        // return Response::json($responseData);
+
+        return view('abandonment', [
+            'results' => $results,
+            'totalCalls' => $totalCalls,
+            'totalAbandonedCalls' => $totalAbandonedCalls,
+            'abandonedCallsPercentage' => $abandonedCallsPercentage,
+            'selectedDate' => $selectedDate
+        ]);
+    }
+
 }

@@ -56,7 +56,7 @@
                             </button>
                             <ul class="dropdown-menu">
                               <a class="dropdown-item" href="{{ route('home') }}">Home</a>
-                              <a class="dropdown-item" href="{{ route('abandonment') }}">Average Call abandonment</a>
+                              <a class="dropdown-item" href="{{ route('abandonment') }}">Call abandonment</a>
                               <a class="dropdown-item" href="{{ route('queue') }}">Average time of queue</a>
                               <a class="dropdown-item" href="{{ route('agent') }}">Average call handle time of Agent</a>
                             </ul>
