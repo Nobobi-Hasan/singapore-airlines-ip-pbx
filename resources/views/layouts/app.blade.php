@@ -24,7 +24,7 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{-- {{ config('app.name', 'Laravel') }} --}}
                     {{-- Singapore Airlines --}}
-                    <img src="{{URL::asset('/images/Singapore_Airlines_Logo.png')}}" alt="" style="height:40px;">
+                    <img src="{{URL::asset('/images/logo_black_orange.png')}}" alt="" style="height:40px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

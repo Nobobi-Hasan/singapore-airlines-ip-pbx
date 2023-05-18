@@ -29,7 +29,8 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/abandonment', [App\Http\Controllers\HomeController::class, 'abandonment'])->name('abandonment');
     Route::get('/abandonment', [App\Http\Controllers\Admin\AdminController::class, 'getCallAbandonment'])->name('abandonment');
 
-    Route::get('/queue', [App\Http\Controllers\HomeController::class, 'queue'])->name('queue');
+    // Route::get('/queue', [App\Http\Controllers\HomeController::class, 'queue'])->name('queue');
+    Route::get('/queue', [App\Http\Controllers\Admin\AdminController::class, 'getQueueTime'])->name('queue');
 
     // Route::get('/agent', [App\Http\Controllers\HomeController::class, 'agent'])->name('agent');
     Route::get('/agent', [App\Http\Controllers\Admin\AdminController::class, 'getAverageCallTimeOfAgent'])->name('agent');

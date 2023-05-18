@@ -142,4 +142,51 @@ class AdminController extends Controller
         ]);
     }
 
+    public function getQueueTime(Request $request)
+    {
+        $selectedDate = $request->input('date');
+
+        $query = AsterisCdrModel::select(
+            DB::raw('DATE(calldate) as date'),
+            DB::raw('COUNT(*) as totalCalls'),
+            DB::raw('SUM(duration) as totalDuration'),
+            DB::raw('SUM(billsec) as totalBillsec'),
+
+            DB::raw('SUM(duration) - SUM(billsec) as totalQueue' ),
+            DB::raw('(SUM(duration) - SUM(billsec)) / COUNT(*) as averageQueue'),
+        )
+            ->groupBy('date')
+            ->orderBy('date', 'desc');
+
+        if ($selectedDate) {
+            $query->whereDate('calldate', '=', $selectedDate);
+        }
+
+        $results = $query->get();
+
+        // return $results;
+
+        $totalCalls = $results->sum('totalCalls');
+        $totalQueue = $results->sum('totalQueue');
+        $totalAverageQueue = $totalCalls > 0 ? ($totalQueue / $totalCalls) : 0;
+
+        $responseData = [
+            'results' => $results,
+            'totalCalls' => $totalCalls,
+            'totalQueue' => $totalQueue,
+            'totalAverageQueue' => $totalAverageQueue,
+            'selectedDate' => $selectedDate
+        ];
+
+        // return Response::json($responseData);
+
+        return view('queue', [
+            'results' => $results,
+            'totalCalls' => $totalCalls,
+            'totalQueue' => $totalQueue,
+            'totalAverageQueue' => $totalAverageQueue,
+            'selectedDate' => $selectedDate
+        ]);
+    }
+
 }

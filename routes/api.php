@@ -19,6 +19,8 @@ Route::get('/asteric/avg', [AdminController::class, 'getAverageCallTimeOfAgent']
 
 Route::get('/asteric/abn', [AdminController::class, 'getCallAbandonment'])->name('abandonment');
 
+Route::get('/asteric/q', [AdminController::class, 'getQueueTime'])->name('queue');
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
