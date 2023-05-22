@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
@@ -38,13 +39,14 @@ class HomeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "currentPassword" => 'required',
-            "password" => 'required',
+            "password" => 'required|string|min:8',
             "retypePassword" => 'required|same:password',
         ]);
 
-        if ($validator->fails()) {
-            return back()->with("error", "Validation Error");
+        if($validator->fails()) {
+            return Redirect::back()->withErrors($validator);
         }
+
 
         if(!Hash::check($request->currentPassword, auth()->user()->password)){
             return back()->with("error", "Current Password Doesn't match!");
@@ -63,23 +65,8 @@ class HomeController extends Controller
                 return back()->with("error", "Password could not change, please try again!");
             }
         } catch (\Throwable $e) {
-            return response()->json(['success' => false, 'message' => 'Error occurred', 'error_message' => $e->getMessage()]);
             return back()->with("error", $e->getMessage());
         }
 
-    }
-
-
-    public function abandonment()
-    {
-        return view('abandonment');
-    }
-    public function queue()
-    {
-        return view('queue');
-    }
-    public function agent()
-    {
-        return view('agent');
     }
 }

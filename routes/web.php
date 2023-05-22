@@ -25,6 +25,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/change-password', [App\Http\Controllers\HomeController::class, 'changePassword'])->name('change_password');
     Route::post('/change-password', [App\Http\Controllers\HomeController::class, 'changePasswordPost'])->name('change_password_post');
 
+    Route::get('/add-user', [App\Http\Controllers\Admin\AddUserController::class, 'AddUser'])->name('add_user');
+    Route::post('/add-user', [App\Http\Controllers\Admin\AddUserController::class, 'AddUserPost'])->name('add_user_post');
+
+    Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'GetProfile'])->name('profile');
+    Route::post('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'UpdateProfile'])->name('profile_update');
+
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     // Route::get('/abandonment', [App\Http\Controllers\HomeController::class, 'abandonment'])->name('abandonment');
