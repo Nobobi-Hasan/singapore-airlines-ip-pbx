@@ -28,7 +28,11 @@
                     </div>
                 </form>
 
-                {{-- {{dd($averageDurations)}} --}}
+                <a class="float-end" href="{{ route('exportAgent') }}">
+                    <button type="submit" class="btn btn-primary">
+                        Export
+                    </button>
+                </a>
 
                 @if(count($averageDurations)>0)
                     @include('agentTable')

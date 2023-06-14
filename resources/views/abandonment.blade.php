@@ -3,6 +3,8 @@
 @section('content')
 <div class="container">
     <h2 class="fs-2 fw-bold mb-5 pt-4">Call abandonment</h2>
+
+
     <div class="row mb-5 card-blocks">
         <div class="col-md-4 mb-3 mb-md-0">
             <div class="p-3 rounded-4 bg-secondary bg-gradient bg-opacity-75 position-relative text-white">
@@ -37,7 +39,7 @@
         <div class="col">
             <div class="bg-white p-3">
 
-                <form method="GET" action="{{ route('abandonment') }}" class="pb-4">
+                <form method="GET" action="{{ route('abandonment') }}" class="pb-2">
                     <div class="input-group input-group-lg">
                         <input type="date" id="date" name="date" class="form-control" />
                         <button type="submit" class="btn btn-primary">
@@ -46,7 +48,11 @@
                     </div>
                 </form>
 
-                {{-- {{dd($averageDurations)}} --}}
+                <a class="float-end" href="{{ route('exportAbandonment') }}">
+                    <button type="submit" class="btn btn-primary">
+                        Export
+                    </button>
+                </a>
 
                 @if(count($results)>0)
                     @include('abandonmentTable')

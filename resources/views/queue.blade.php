@@ -49,6 +49,12 @@
                     </div>
                 </form>
 
+                <a class="float-end" href="{{ route('exportQueue') }}">
+                    <button type="submit" class="btn btn-primary">
+                        Export
+                    </button>
+                </a>
+
                 {{-- {{dd($averageDurations)}} --}}
 
                 @if(count($results)>0)
