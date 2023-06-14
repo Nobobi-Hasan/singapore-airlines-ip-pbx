@@ -39,8 +39,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Route::get('/queue', [App\Http\Controllers\HomeController::class, 'queue'])->name('queue');
     Route::get('/queue', [App\Http\Controllers\Admin\AdminController::class, 'getQueueTime'])->name('queue');
+    Route::get('/queueExcel', [App\Http\Controllers\Admin\ExportController::class, 'exportQueue'])->name('exportQueue');
 
     // Route::get('/agent', [App\Http\Controllers\HomeController::class, 'agent'])->name('agent');
     Route::get('/agent', [App\Http\Controllers\Admin\AdminController::class, 'getAverageCallTimeOfAgent'])->name('agent');
+    Route::get('/agentExcel', [App\Http\Controllers\Admin\ExportController::class, 'exportAgent'])->name('exportAgent');
 
 });

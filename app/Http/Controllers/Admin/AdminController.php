@@ -48,6 +48,7 @@ class AdminController extends Controller
             }
 
             $averageDurations = $query->get();
+            Session::put('averageDurations', $averageDurations);
 
             if ($averageDurations) {
                 return view('agent', compact('averageDurations'));
@@ -101,7 +102,7 @@ class AdminController extends Controller
         }
 
         $results = $query->get();
-        Session::put('results', $results);
+        Session::put('abandonments', $results);
 
         $totalCalls = $results->sum('totalCalls');
         $totalAbandonedCalls = $results->sum('abandonedCalls');
@@ -151,6 +152,7 @@ class AdminController extends Controller
         }
 
         $results = $query->get();
+        Session::put('queues', $results);
 
         // return $results;
 

@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col">
-            <h2 class="fs-2 fw-bold text-center">Average call handle time of Agent</h2>
+            <h2 class="fs-2 fw-bold mb-5 pt-4">Average call handle time of Agent</h2>
             <div class="bg-white p-3">
 
                 <form method="GET" action="{{ route('agent') }}" class="pb-4">
@@ -19,7 +19,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="input-group input-group-lg">
-                                    <input type="date" id="date" name="date" class="form-control" />
+                                <input type="date" id="date" name="date" class="form-control" />
                                 <button type="submit" class="btn btn-primary">
                                     Search
                                 </button>
