@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Route::get('/abandonment', [App\Http\Controllers\HomeController::class, 'abandonment'])->name('abandonment');
     Route::get('/abandonment', [App\Http\Controllers\Admin\AdminController::class, 'getCallAbandonment'])->name('abandonment');
+    Route::get('/abandonmentExcel', [App\Http\Controllers\Admin\ExportController::class, 'exportAbandonment'])->name('exportAbandonment');
 
     // Route::get('/queue', [App\Http\Controllers\HomeController::class, 'queue'])->name('queue');
     Route::get('/queue', [App\Http\Controllers\Admin\AdminController::class, 'getQueueTime'])->name('queue');

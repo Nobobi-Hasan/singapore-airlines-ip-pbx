@@ -8,6 +8,7 @@ use App\Models\AsterisCdrModel;
 use App\Models\AsterisUserModel;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Response;
 
 class AdminController extends Controller
@@ -47,25 +48,6 @@ class AdminController extends Controller
             }
 
             $averageDurations = $query->get();
-
-            // $data = [];
-            // foreach ($averageDurations as $averageDuration) {
-            //     if($averageDuration->extension = 110)
-            //     {
-
-            //         $emp['extension'] = $averageDuration->extension;
-            //         $emp['name'] = $averageDuration->name;
-            //         $emp['outgoing'] = $averageDuration->outgoing;
-            //         $emp['incomming'] = $averageDuration->incomming;
-            //         $emp['totalTime'] = $averageDuration->totalTime;
-            //         $emp['avgDuration'] = $averageDuration->avgDuration;
-
-            //         array_push($data, $emp);
-            //         // return $data;
-            //     }
-            // }
-            // return $data;
-
 
             if ($averageDurations) {
                 return view('agent', compact('averageDurations'));
@@ -119,6 +101,7 @@ class AdminController extends Controller
         }
 
         $results = $query->get();
+        Session::put('results', $results);
 
         $totalCalls = $results->sum('totalCalls');
         $totalAbandonedCalls = $results->sum('abandonedCalls');
