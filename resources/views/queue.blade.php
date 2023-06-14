@@ -37,7 +37,7 @@
         <div class="col">
             <div class="bg-white p-3">
 
-                <form method="GET" action="{{ route('queue') }}" class="pb-4">
+                <form method="GET" action="{{ route('queue') }}" class="pb-2">
                     <div class="input-group input-group-lg">
                         <span class="input-group-text">From</span>
                         <input type="date" id="date_from" name="date_from" class="form-control" />
