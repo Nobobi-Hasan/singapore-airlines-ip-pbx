@@ -9,7 +9,7 @@ class AsterisUserModel extends Model
 {
     use HasFactory;
 
-    protected $connection = 'asteris';
+    protected $connection = 'asterisk';
     protected $table = 'users';
 
     protected $guarded = [];

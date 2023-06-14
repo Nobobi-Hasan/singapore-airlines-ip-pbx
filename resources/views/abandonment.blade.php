@@ -38,10 +38,8 @@
             <div class="bg-white p-3">
 
                 <form method="GET" action="{{ route('abandonment') }}" class="pb-4">
-                    <div class="input-group">
-                        <div class="form-outline">
-                            <input type="date" id="date" name="date" class="form-control" />
-                        </div>
+                    <div class="input-group input-group-lg">
+                        <input type="date" id="date" name="date" class="form-control" />
                         <button type="submit" class="btn btn-primary">
                             Search
                         </button>

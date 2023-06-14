@@ -9,21 +9,17 @@
 
                 <form method="GET" action="{{ route('agent') }}" class="pb-4">
                     <div class="row">
-                        <div class="col-md-9">
-                            <div class="input-group">
-                                <div class="form-outline">
-                                    <input type="search" id="search" name="search" class="form-control" placeholder="Name or Extension..."/>
-                                </div>
+                        <div class="col-md-6">
+                            <div class="input-group input-group-lg">
+                                <input type="search" id="search" name="search" class="form-control flex-shrink-1" placeholder="Name or Extension..."/>
                                 <button type="submit" class="btn btn-primary">
                                     Search
                                 </button>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <div class="form-outline">
+                        <div class="col-md-6">
+                            <div class="input-group input-group-lg">
                                     <input type="date" id="date" name="date" class="form-control" />
-                                </div>
                                 <button type="submit" class="btn btn-primary">
                                     Search
                                 </button>
@@ -42,8 +38,8 @@
                             <th scope="col">Name</th>
                             <th scope="col">Outgoing Calls</th>
                             <th scope="col">Incommming Calls</th>
-                            <th scope="col">Total Call Duration (seconds)</th>
-                            <th scope="col">Average Call Duration (seconds)</th>
+                            <th scope="col">Total Call Duration</th>
+                            <th scope="col">Average Call Duration</th>
                         </tr>
                         </thead>
 
@@ -54,8 +50,20 @@
                                     <td>{{ $averageDuration->name }}</td>
                                     <td>{{ $averageDuration->outgoing }}</td>
                                     <td>{{ $averageDuration->incomming }}</td>
-                                    <td>{{ $averageDuration->totalTime }}</td>
-                                    <td>{{ round($averageDuration->avgDuration, 2) }}</td>
+                                    <td>{{ sprintf("%02d:%02d:%02d",
+                                                floor($averageDuration->totalTime / 3600),
+                                                floor(($averageDuration->totalTime % 3600)/60),
+                                                ($averageDuration->totalTime % 60)
+                                            )
+                                        }}
+                                    </td>
+                                    <td>{{ sprintf("%02d:%02d:%02d",
+                                                floor(round($averageDuration->avgDuration, 2) / 3600),
+                                                floor((round($averageDuration->avgDuration, 2) % 3600)/60),
+                                                (round($averageDuration->avgDuration, 2) % 60)
+                                            )
+                                        }}
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

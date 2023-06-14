@@ -38,10 +38,11 @@
             <div class="bg-white p-3">
 
                 <form method="GET" action="{{ route('queue') }}" class="pb-4">
-                    <div class="input-group">
-                        <div class="form-outline">
-                            <input type="date" id="date" name="date" class="form-control" />
-                        </div>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text">From</span>
+                        <input type="date" id="date_from" name="date_from" class="form-control" />
+                        <span class="input-group-text">To</span>
+                        <input type="date" id="date_to" name="date_to" class="form-control"/>
                         <button type="submit" class="btn btn-primary">
                             Search
                         </button>
@@ -68,10 +69,34 @@
                                 <tr>
                                     <td>{{ $result->date }}</td>
                                     <td>{{ $result->totalCalls }}</td>
-                                    <td>{{ $result->totalDuration }}</td>
-                                    <td>{{ $result->totalBillsec }}</td>
-                                    <td>{{ $result->totalQueue }}</td>
-                                    <td>{{ round($result->averageQueue, 2 )}}</td>
+                                    <td>{{ sprintf("%02d:%02d:%02d",
+                                                floor($result->totalDuration / 3600),
+                                                floor(($result->totalDuration % 3600)/60),
+                                                ($result->totalDuration % 60)
+                                            )
+                                        }}
+                                    </td>
+                                    <td>{{ sprintf("%02d:%02d:%02d",
+                                                floor($result->totalBillsec / 3600),
+                                                floor(($result->totalBillsec % 3600)/60),
+                                                ($result->totalBillsec % 60)
+                                            )
+                                        }}
+                                    </td>
+                                    <td>{{ sprintf("%02d:%02d:%02d",
+                                                floor($result->totalQueue / 3600),
+                                                floor(($result->totalQueue % 3600)/60),
+                                                ($result->totalQueue % 60)
+                                            )
+                                        }}
+                                    </td>
+                                    <td>{{ sprintf("%02d:%02d:%02d",
+                                                floor(round($result->averageQueue, 2) / 3600),
+                                                floor((round($result->averageQueue, 2) % 3600)/60),
+                                                (round($result->averageQueue, 2) % 60)
+                                            )
+                                        }}
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

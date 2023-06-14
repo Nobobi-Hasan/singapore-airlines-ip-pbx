@@ -18,7 +18,7 @@ class AdminController extends Controller
         try {
 
             $query = AsterisCdrModel::query()
-                ->rightJoin('asteris.users', function ($join) {
+                ->rightJoin('asterisk.users', function ($join) {
                     $join->on('cdr.src', '=', 'users.extension')
                         ->orOn('cdr.dst', '=', 'users.extension');
                 })
@@ -31,6 +31,7 @@ class AdminController extends Controller
                     DB::raw('AVG(cdr.duration) as avgDuration')
                 )
                 ->groupBy('users.extension')
+                ->groupBy('users.name')
                 ->orderBy('users.extension');
 
 
@@ -144,7 +145,8 @@ class AdminController extends Controller
 
     public function getQueueTime(Request $request)
     {
-        $selectedDate = $request->input('date');
+        $selectedDateFrom = $request->input('date_from');
+        $selectedDateTo = $request->input('date_to');
 
         $query = AsterisCdrModel::select(
             DB::raw('DATE(calldate) as date'),
@@ -158,8 +160,11 @@ class AdminController extends Controller
             ->groupBy('date')
             ->orderBy('date', 'desc');
 
-        if ($selectedDate) {
-            $query->whereDate('calldate', '=', $selectedDate);
+        if ($selectedDateTo) {
+            $query->whereDate('calldate', '<=', $selectedDateTo);
+        }
+        if ($selectedDateFrom) {
+            $query->whereDate('calldate', '>=', $selectedDateFrom);
         }
 
         $results = $query->get();
@@ -175,7 +180,7 @@ class AdminController extends Controller
             'totalCalls' => $totalCalls,
             'totalQueue' => $totalQueue,
             'totalAverageQueue' => $totalAverageQueue,
-            'selectedDate' => $selectedDate
+            // 'selectedDate' => $selectedDate
         ];
 
         // return Response::json($responseData);
@@ -185,7 +190,7 @@ class AdminController extends Controller
             'totalCalls' => $totalCalls,
             'totalQueue' => $totalQueue,
             'totalAverageQueue' => $totalAverageQueue,
-            'selectedDate' => $selectedDate
+            // 'selectedDate' => $selectedDate
         ]);
     }
 
