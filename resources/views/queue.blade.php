@@ -125,18 +125,19 @@
       <div class="modal-content">
         <div class="modal-header">
             <h1 class="modal-title fs-5" id="detailModalLabel">Queue Details of <b id="titleDate"></b></h1>
-            <div class="">
-                <a class="px-4" href="{{ route('exportQueueDetails') }}">
-                    <button type="submit" class="btn btn-primary">
-                        Export
-                    </button>
-                </a>
                 <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
         </div>
 
         <div class="modal-body fs-6" id="modalData">
 
+        </div>
+
+        <div class="modal-footer">
+            <a class="px-4" href="{{ route('exportQueueDetails') }}">
+                <button type="submit" class="btn btn-primary">
+                    Export
+                </button>
+            </a>
         </div>
 
       </div>
