@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h2 class="fs-2 fw-bold mb-5 pt-4">Average Queue Time</h2>
+    <h2 class="fs-2 fw-bold mb-5 pt-4">Average Queue Time (Answered Calls)</h2>
     <div class="row mb-5 card-blocks">
         <div class="col-md-4 mb-3 mb-md-0">
             <div class="p-3 rounded-4 bg-secondary bg-gradient bg-opacity-75 position-relative text-white">
@@ -55,10 +55,61 @@
                     </button>
                 </a>
 
-                {{-- {{dd($averageDurations)}} --}}
-
                 @if(count($results)>0)
-                    @include('queueTable')
+                    {{-- @include('queueTable') --}}
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Call Date</th>
+                            <th scope="col">Total Calls</th>
+                            <th scope="col">Total Duration</th>
+                            <th scope="col">Total Bill Time</th>
+                            <th scope="col">Total Queue</th>
+                            <th scope="col">Average Queue</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach ($results as $result)
+                                <tr>
+                                    <td>{{ $result->date }}</td>
+                                    <td>{{ $result->totalCalls }}</td>
+                                    <td>{{ sprintf("%02d:%02d:%02d",
+                                                floor($result->totalDuration / 3600),
+                                                floor(($result->totalDuration % 3600)/60),
+                                                ($result->totalDuration % 60)
+                                            )
+                                        }}
+                                    </td>
+                                    <td>{{ sprintf("%02d:%02d:%02d",
+                                                floor($result->totalBillsec / 3600),
+                                                floor(($result->totalBillsec % 3600)/60),
+                                                ($result->totalBillsec % 60)
+                                            )
+                                        }}
+                                    </td>
+                                    <td>{{ sprintf("%02d:%02d:%02d",
+                                                floor($result->totalQueue / 3600),
+                                                floor(($result->totalQueue % 3600)/60),
+                                                ($result->totalQueue % 60)
+                                            )
+                                        }}
+                                    </td>
+                                    <td>{{ sprintf("%02d:%02d:%02d",
+                                                floor(round($result->averageQueue, 2) / 3600),
+                                                floor((round($result->averageQueue, 2) % 3600)/60),
+                                                (round($result->averageQueue, 2) % 60)
+                                            )
+                                        }}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-secondary" style="padding: .25rem .5rem;" data-bs-toggle="modal" href="#detailModal" data-date="{{ $result->date }}">Details</button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 @else
                     <br>
                     <br>
@@ -68,6 +119,46 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="detailModalLabel">Queue Details of <b id="titleDate"></b></h1>
+            <div class="">
+                <a class="px-4" href="{{ route('exportQueueDetails') }}">
+                    <button type="submit" class="btn btn-primary">
+                        Export
+                    </button>
+                </a>
+                <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+
+        <div class="modal-body fs-6" id="modalData">
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<script>
+    document.getElementById('detailModal').addEventListener('show.bs.modal', async (event) =>  {
+        let button = event.relatedTarget;
+        let date = button.getAttribute('data-date');
+        let response = await fetch("queue-details-modal/" + date).then(data => data.json()).then(res => res);
+        document.getElementById('titleDate').innerText = date ;
+        document.getElementById('modalData').innerHTML = response ;
+    });
+
+    document.getElementById('detailModal').addEventListener('hidden.bs.modal', event => {
+        document.getElementById('titleDate').innerText = "" ;
+        document.getElementById('modalData').innerHTML = "" ;
+    })
+
+</script>
+
 @endsection
 <style>
     .card-blocks svg{

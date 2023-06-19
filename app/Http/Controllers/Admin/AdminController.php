@@ -141,6 +141,7 @@ class AdminController extends Controller
             DB::raw('SUM(duration) - SUM(billsec) as totalQueue' ),
             DB::raw('(SUM(duration) - SUM(billsec)) / COUNT(*) as averageQueue'),
         )
+            ->where('disposition', 'ANSWERED')
             ->groupBy('date')
             ->orderBy('date', 'desc');
 
@@ -153,8 +154,6 @@ class AdminController extends Controller
 
         $results = $query->get();
         Session::put('queues', $results);
-
-        // return $results;
 
         $totalCalls = $results->sum('totalCalls');
         $totalQueue = $results->sum('totalQueue');
@@ -177,6 +176,64 @@ class AdminController extends Controller
             'totalAverageQueue' => $totalAverageQueue,
             // 'selectedDate' => $selectedDate
         ]);
+    }
+
+    function queueDetailsModal($date) {
+
+        $details = AsterisCdrModel::select(['calldate', 'src', 'dst', 'disposition', 'duration', 'billsec'])
+                                    ->where('disposition', 'ANSWERED')
+                                    ->where('calldate','LIKE',"{$date}%")
+                                    ->get();
+
+        Session::put('queueDetails', $details);
+
+        $first = '<table class="table table-hover fs-6">
+                    <thead>
+                        <tr>
+                            <th scope="col">Call Start</th>
+                            <th scope="col">Call Answered</th>
+                            <th scope="col">Src</th>
+                            <th scope="col">Dst</th>
+                            <th scope="col">Disposition</th>
+                            <th scope="col">Queue Time</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>';
+
+        $html = "";
+
+        if($details){
+            foreach($details as $detail){
+
+                $queue = $detail->duration - $detail->billsec;
+
+                $start = strtotime($detail->calldate);
+                $callAnswered = date('Y-m-d H:i:s', $start + $queue);
+
+                $htmlNew=
+                '<tr>
+                    <td>'.$detail->calldate.'</td>
+                    <td>'.$callAnswered .'</td>
+                    <td>'.$detail->src.'</td>
+                    <td>'.$detail->dst.'</td>
+                    <td>'.$detail->disposition.'</td>
+                    <td>'.$queue.'</td>
+                <tr>';
+
+                $html = $html.$htmlNew;
+            }
+        }
+
+        $last = '</tbody>
+                </table>';
+
+        $table = $first.$html.$last;
+
+        $response = $table;
+
+        return response()->json($response);
+
     }
 
 }
