@@ -4,7 +4,6 @@
 <div class="container">
     <h2 class="fs-2 fw-bold mb-5 pt-4">Call Abandonment</h2>
 
-
     <div class="row mb-5 card-blocks">
         <div class="col-md-4 mb-3 mb-md-0">
             <div class="p-3 rounded-4 bg-secondary bg-gradient bg-opacity-75 position-relative text-white">
