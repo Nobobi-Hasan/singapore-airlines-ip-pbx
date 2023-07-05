@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col">
-            <h2 class="fs-2 fw-bold mb-5 pt-4">Average Call Handle Time Of Agent</h2>
+            <h2 class="fs-2 fw-bold mb-5 pt-4">Average Call Handle Time of Agent</h2>
             <div class="bg-white p-3">
 
                 <form method="GET" action="{{ route('agent') }}" class="pb-4">

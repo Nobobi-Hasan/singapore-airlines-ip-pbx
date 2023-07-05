@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-4">
             <div class="p-3 rounded-4 bg-secondary bg-gradient bg-opacity-75 position-relative text-white">
-                <h5 class="fw-bolder">Abandoned Calls (%)</h3>
+                <h5 class="fw-bolder">ABANDONED CALLS (%)</h3>
                 <p class="fw-light fs-5">{{round($abandonedCallsPercentage, 2)}}</p>
                 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-percent" viewBox="0 0 16 16">
                     <path d="M13.442 2.558a.625.625 0 0 1 0 .884l-10 10a.625.625 0 1 1-.884-.884l10-10a.625.625 0 0 1 .884 0zM4.5 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm7 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
