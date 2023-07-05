@@ -57,6 +57,8 @@
 
                 @if(count($results)>0)
                     {{-- @include('queueTable') --}}
+
+                    {{-- added Action field here, so cant include queueTable--}}
                     <table class="table table-striped table-hover">
                         <thead>
                         <tr>
