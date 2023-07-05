@@ -53,7 +53,6 @@ class AdminController extends Controller
             if ($averageDurations) {
                 return view('agent', compact('averageDurations'));
             } else {
-                // return response()->json(['success' => true, 'message' => 'Error occurred', 'error_message' => 'No HomeInternet found'], 201);
                 return view('agent', compact('averageDurations'));
             }
         }catch (\Throwable $e) {
@@ -74,7 +73,6 @@ class AdminController extends Controller
             if ($totalCall) {
                 return $receivedCall;
             } else {
-                // return response()->json(['success' => true, 'message' => 'Error occurred', 'error_message' => 'No HomeInternet found'], 201);
                 return view('agent', compact('averageDurations'));
             }
 
@@ -115,8 +113,6 @@ class AdminController extends Controller
             'abandonedCallsPercentage' => $abandonedCallsPercentage,
             'selectedDate' => $selectedDate
         ];
-
-        // return Response::json($responseData);
 
         return view('abandonment', [
             'results' => $results,
@@ -164,17 +160,14 @@ class AdminController extends Controller
             'totalCalls' => $totalCalls,
             'totalQueue' => $totalQueue,
             'totalAverageQueue' => $totalAverageQueue,
-            // 'selectedDate' => $selectedDate
         ];
 
-        // return Response::json($responseData);
 
         return view('queue', [
             'results' => $results,
             'totalCalls' => $totalCalls,
             'totalQueue' => $totalQueue,
             'totalAverageQueue' => $totalAverageQueue,
-            // 'selectedDate' => $selectedDate
         ]);
     }
 
