@@ -16,7 +16,6 @@ class QueueExport implements FromView, ShouldAutoSize
 
         $query = AsterisCdrModel::select(['calldate', 'src', 'dst', 'dstchannel', 'disposition', 'duration', 'billsec'])
                                     ->where('disposition', 'ANSWERED');
-                                    // ->where('calldate','LIKE',"{$date}%")
 
 
         if (Session::get('selectedDateFrom') != null) {
@@ -28,8 +27,6 @@ class QueueExport implements FromView, ShouldAutoSize
 
         $details = $query->get();
 
-        Session::put('queueDetails', $details);
-
-        return view('queueDetailsTable', ['details' => Session::get('queueDetails')] );
+        return view('queueDetailsTable', ['details' =>  $details] );
     }
 }
