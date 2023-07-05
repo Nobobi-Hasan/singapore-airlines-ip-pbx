@@ -59,7 +59,7 @@
                               <a class="dropdown-item" href="{{ route('home') }}">Home</a>
                               <a class="dropdown-item" href="{{ route('abandonment') }}">Call abandonment</a>
                               <a class="dropdown-item" href="{{ route('queue') }}">Average time of queue (Answered Calls)</a>
-                              <a class="dropdown-item" href="{{ route('agent') }}">Average call handle time of Agent</a>
+                              <a class="dropdown-item" href="{{ route('agent') }}">Average call handle time of agent</a>
                             </ul>
                           </div>
                         @endguest

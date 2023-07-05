@@ -4,9 +4,10 @@
             <th scope="col">Call Start</th>
             <th scope="col">Call Answered</th>
             <th scope="col">Src</th>
+            <th scope="col">Dst Channel</th>
             <th scope="col">Dst</th>
-            <th scope="col">Disposition</th>
-            <th scope="col">Queue Time</th>
+            <th scope="col">Status</th>
+            <th scope="col">Queue Time(sec)</th>
         </tr>
     </thead>
 
@@ -22,6 +23,7 @@
                 <td>{{$callAnswered }}</td>
                 <td>{{$detail->src}}</td>
                 <td>{{$detail->dst}}</td>
+                <td>{{$detail->dstchannel}}</td>
                 <td>{{$detail->disposition}}</td>
                 <td>{{$queue}}</td>
             </tr>
