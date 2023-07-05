@@ -171,7 +171,7 @@ class AdminController extends Controller
         ]);
     }
 
-    function queueDetailsModal($date) {
+    public function queueDetailsModal($date) {
 
         $details = AsterisCdrModel::select(['calldate', 'src', 'dst', 'dstchannel', 'disposition', 'duration', 'billsec'])
                                     ->where('disposition', 'ANSWERED')
