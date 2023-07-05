@@ -141,15 +141,20 @@ class AdminController extends Controller
             ->groupBy('date')
             ->orderBy('date', 'desc');
 
-        if ($selectedDateTo) {
-            $query->whereDate('calldate', '<=', $selectedDateTo);
-        }
+        Session::forget('selectedDateFrom');
+        Session::forget('selectedDateTo');
+
         if ($selectedDateFrom) {
             $query->whereDate('calldate', '>=', $selectedDateFrom);
+            Session::put('selectedDateFrom', $selectedDateFrom);
+        }
+        if ($selectedDateTo) {
+            $query->whereDate('calldate', '<=', $selectedDateTo);
+            Session::put('selectedDateTo', $selectedDateTo);
         }
 
         $results = $query->get();
-        Session::put('queues', $results);
+        // Session::put('queues', $results);
 
         $totalCalls = $results->sum('totalCalls');
         $totalQueue = $results->sum('totalQueue');
